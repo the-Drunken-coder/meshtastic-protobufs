@@ -538,7 +538,42 @@ message AdminMessage {
      * to carry passphrase bytes; that hack is retired.
      */
     LockdownAuth lockdown_auth = 104;
+
+    /*
+     * Read the radio-mode capability and the saved/active state before writing a mode.
+     */
+    bool get_radio_mode_status_request = 105;
+
+    /*
+     * Physical radio state, distinct from retained LoRa tuning configuration.
+     */
+    RadioModeStatus get_radio_mode_status_response = 106;
   }
+}
+
+/*
+ * Radio-mode contract version 1. Experimental TX is a build opt-in, not RF approval.
+ */
+message RadioModeStatus {
+  enum BlockedReason {
+    NONE = 0;
+    INVALID_CONFIGURATION = 1;
+    NOT_INITIALIZED = 2;
+    RF_APPROVAL_REQUIRED = 3;
+    TX_DISABLED = 4;
+  }
+
+  uint32 capability_version = 1;
+  bool flrc_supported = 2;
+  Config.LoRaConfig.RadioMode configured_mode = 3;
+  Config.LoRaConfig.RadioMode active_mode = 4;
+  bool active_initialized = 5;
+  bool restart_pending = 6;
+  bool configuration_valid = 7;
+  bool transmit_allowed = 8;
+  bool experimental_tx_enabled = 9;
+  float carrier_mhz = 10;
+  BlockedReason blocked_reason = 11;
 }
 
 /*
