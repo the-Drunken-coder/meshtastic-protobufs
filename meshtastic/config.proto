@@ -994,6 +994,16 @@ message Config {
    * Lora Config
    */
   message LoRaConfig {
+    /*
+     * Physical modulation. The retained LoRa tuning fields do not tune FLRC.
+     */
+    enum RadioMode {
+      /* Use the retained LoRa modem and frequency settings. */
+      LORA = 0;
+      /* Use the fixed W12 FLRC profile, retaining LoRa settings for a later return. */
+      FLRC = 1;
+    }
+
     enum RegionCode {
       /*
        * Region is not set
@@ -1504,6 +1514,12 @@ message Config {
      * Don't use radiolib to initialize the radio, instead listen for a serialHal connection
      */
     bool serial_hal_only = 107;
+
+    /*
+     * Device-wide mode, applied after reboot. Old saved configuration defaults to
+     * LoRa; an omitted field in an update preserves the current selection.
+     */
+    optional RadioMode radio_mode = 108;
   }
 
   message BluetoothConfig {

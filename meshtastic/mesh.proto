@@ -2022,6 +2022,12 @@ message MeshPacket {
    * to delivery rather than to authorship.
    */
   AckProofStatus ack_proof_status = 23;
+
+  /*
+   * The receiver did not measure SNR. rx_snr must not be presented as a measurement.
+   * Local metadata only; not included in the RF frame.
+   */
+  bool rx_snr_unavailable = 24;
 }
 
 /*
@@ -2183,6 +2189,11 @@ message NodeInfo {
    * Derived from LSB 11 and bits 12..23 of NodeInfoLite.bitfield.
    */
   bool heard_on_current_lora = 15;
+
+  /*
+   * The last RF reception did not provide a measured SNR.
+   */
+  bool snr_unavailable = 16;
 }
 
 /*
