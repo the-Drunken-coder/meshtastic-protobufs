@@ -556,10 +556,15 @@ message AdminMessage {
  */
 message RadioModeStatus {
   enum BlockedReason {
+    /* The current selection and transmit policy allow transmission. */
     NONE = 0;
+    /* The active or saved selection is incompatible with the board or region. */
     INVALID_CONFIGURATION = 1;
+    /* The active FLRC radio has not completed initialization. */
     NOT_INITIALIZED = 2;
+    /* Standard FLRC firmware awaits measured RF approval. */
     RF_APPROVAL_REQUIRED = 3;
+    /* The saved transmit-enable preference is off. */
     TX_DISABLED = 4;
   }
 

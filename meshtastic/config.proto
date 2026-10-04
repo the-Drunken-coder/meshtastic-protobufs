@@ -998,7 +998,9 @@ message Config {
      * Physical modulation. The retained LoRa tuning fields do not tune FLRC.
      */
     enum RadioMode {
+      /* Use the retained LoRa modem and frequency settings. */
       LORA = 0;
+      /* Use the fixed W12 FLRC profile, retaining LoRa settings for a later return. */
       FLRC = 1;
     }
 
